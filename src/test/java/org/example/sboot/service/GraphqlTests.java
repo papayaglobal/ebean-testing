@@ -3,13 +3,12 @@ package org.example.sboot.service;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
-import io.ebean.test.UserContext;
 import io.leangen.graphql.GraphQLSchemaGenerator;
 import org.example.sboot.TestUtils;
-import org.example.sboot.domain.Contract;
-import org.example.sboot.domain.Payment;
-import org.example.sboot.domain.Worker;
-import org.example.sboot.domain.repo.WorkerRepository;
+import org.example.sboot.model.Contract;
+import org.example.sboot.model.Payment;
+import org.example.sboot.model.Worker;
+import org.example.sboot.repo.WorkerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -21,8 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
-
-import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
@@ -56,7 +53,7 @@ public class GraphqlTests {
     payment.setPayedAmount(BigDecimal.valueOf(1000L));
     payment.setPayedAmountCurrency("USD");
     payment.setExecutedAt(LocalDateTime.now());
-    worker.getPayments().add(payment);
+//    worker.getPayments().add(payment);
 
     workerRepository.save(worker);
 
@@ -96,28 +93,6 @@ public class GraphqlTests {
     System.out.println("Returned JSON : " + result3.getData());
     expectedJson = "{worker={firstName:Aden, lastName:Patton, contracts=[{projectName=Project1}], payments:[{payedAmountCurrency:USD}]}}";
     JSONAssert.assertEquals(expectedJson, result3.getData().toString(), JSONCompareMode.STRICT);
-  }
-
-  @Test
-  public void testSoftDeleteAndPermamnent() {
-    UserContext.setUserId("U1");
-    Worker worker = new Worker();
-    worker.setFirstName("Layla");
-    worker.setLastName("Mercer");
-    worker.setMaritalStatus("Single");
-    worker.setNumOfChildren(0);
-
-    Contract contract = new Contract();
-    contract.setBaseSalary(1000);
-    contract.setProjectName("Project1");
-    contract.setStartDate(TestUtils.getDate("01-01-2020"));
-    contract.setEndDate(TestUtils.getDate("30-04-2020"));
-    worker.getContracts().add(contract);
-
-    worker.save();
-
-    workerRepository.delete(worker);
-    //worker.delete();
   }
 
 }

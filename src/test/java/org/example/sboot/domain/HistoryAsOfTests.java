@@ -2,20 +2,17 @@ package org.example.sboot.domain;
 
 import io.ebean.DB;
 import io.ebean.Version;
-import io.ebean.annotation.Transactional;
-import io.ebean.test.ForTests;
 import io.ebean.test.UserContext;
 import org.example.sboot.TestUtils;
-import org.example.sboot.domain.repo.WorkerRepository;
-import org.junit.After;
-import org.junit.Before;
+import org.example.sboot.model.Contract;
+import org.example.sboot.model.Payment;
+import org.example.sboot.model.Worker;
+import org.example.sboot.repo.WorkerRepository;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
