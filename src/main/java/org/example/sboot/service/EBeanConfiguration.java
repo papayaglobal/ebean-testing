@@ -15,9 +15,6 @@ public class EBeanConfiguration {
     @Autowired
     CurrentUser currentUser;
 
-    @Autowired
-    BeanPersistAdapterImpl beanPersistAdapter;
-
     @Bean
     public DatabaseConfig ebeanServerConfig(DataSource dataSource) {
         DatabaseConfig config = new DatabaseConfig();
@@ -25,7 +22,6 @@ public class EBeanConfiguration {
         config.setCurrentUserProvider(currentUser);
         config.setDataTimeZone("UTC");
         config.loadFromProperties();
-        //config.add(beanPersistAdapter);
         return config;
     }
 
