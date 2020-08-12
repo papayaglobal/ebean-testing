@@ -17,6 +17,7 @@ import java.util.List;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class HistoryCascadeTest {
     PayerRepository payerRepository = new PayerRepository(DB.getDefault());
+
     @BeforeAll
     @SneakyThrows
     void init(){
@@ -39,9 +40,9 @@ public class HistoryCascadeTest {
         payerRepository.save(payer);
         Thread.sleep(1000);
     }
+
     @Test
     public void testHistoryQueries() {
-
         List<Version<Payer>> version = payerRepository.findVersion(Timestamp.valueOf(LocalDateTime.MIN), Timestamp.valueOf(LocalDateTime.now()));
         version.forEach(v -> {
             System.out.println(v.getBean());
@@ -50,9 +51,9 @@ public class HistoryCascadeTest {
         Assert.assertTrue(version.get(1).getBean().getOrganization().getName().equals("papaya-updated-first") ||
                 version.get(1).getBean().getOrganization().getName().equals("papaya"));
     }
+
     @Test
     public void testHistoryQueriesQueryBeans() {
-
         List<Version<Payer>> version = payerRepository.findVersionQueryBean(Timestamp.valueOf(LocalDateTime.MIN), Timestamp.valueOf(LocalDateTime.now()));
         version.forEach(v -> {
             System.out.println(v.getBean());
